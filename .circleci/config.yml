@@ -1,0 +1,28 @@
+version: 2.1
+
+jobs:
+  test-arm64:
+    machine:
+      enabled: true
+    resource_class: abhayps/arm64-linux   # Replace with your actual resource class
+    steps:
+      - checkout
+      - run:
+          name: Verify ARM64 Runner
+          command: |
+            uname -m
+            lscpu | grep Architecture
+            ./hello.sh
+      - run:
+          name: Run sample computation
+          command: |
+            echo "Performing test on ARM64 runner"
+            echo "CPU Info:"
+            lscpu
+            echo "Success!"
+
+workflows:
+  test-workflow:
+    jobs:
+      - test-arm64
+
